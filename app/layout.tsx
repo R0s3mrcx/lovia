@@ -9,9 +9,8 @@ const nunito = Nunito({
 })
 
 export const metadata: Metadata = {
-  title: "Magic Cards ✨ | Create Adorable Love Cards",
-  description: "Create magical kawaii cards with cute 3D animals and share love with the world 💖",
-  generator: "v0.app",
+  title: "Lovia ✨ | Create Adorable Love Cards",
+  description: "Create magical and cute cards with cute 3D animals and share love with the world 💖",
 }
 
 export const viewport: Viewport = {
