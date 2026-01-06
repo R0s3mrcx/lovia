@@ -35,6 +35,10 @@ export default function HomePage() {
     <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-pink-100 via-purple-50 to-cyan-100">
       <FloatingElements />
 
+      <div className="absolute top-4 left-4 z-20 md:top-6 md:left-6">
+        <h2 className="text-2xl font-extrabold tracking-tight text-primary md:text-3xl">Lovia💖</h2>
+      </div>
+
       <div className="relative z-10 mx-auto max-w-6xl px-4 py-12 md:py-20">
         {/* Header */}
         <header className="mb-12 text-center md:mb-16">
@@ -42,13 +46,13 @@ export default function HomePage() {
             Create magical cards ✨
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-pretty text-lg text-muted-foreground md:text-xl">
-            Choose an adorable 3D animal and write a special message for someone you love 💖
+            Choose an adorable 3D animal and write a special message for someone you love
           </p>
         </header>
 
         {/* Animal Selection Grid */}
         <section className="mb-12">
-          <h2 className="mb-6 text-center text-2xl font-bold text-foreground">Pick your cute companion 🐾</h2>
+          <h2 className="mb-6 text-center text-2xl font-bold text-foreground">Pick your cute companion</h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-6">
             {animals.map((animal) => (
               <AnimalCard

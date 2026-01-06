@@ -25,7 +25,7 @@ export const animals: Animal[] = [
     id: "panda",
     name: "Panda",
     emoji: "🐼",
-    image: "/animals/panda.png",
+    image: "/animals/bear.png",
     color: "from-gray-200 to-slate-300",
   },
   {
