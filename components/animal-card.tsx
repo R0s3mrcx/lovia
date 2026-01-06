@@ -14,7 +14,7 @@ export function AnimalCard({ animal, selected, onSelect }: AnimalCardProps) {
     <button
       onClick={onSelect}
       className={cn(
-        "group relative overflow-hidden rounded-3xl border-4 p-4 transition-all duration-300 hover:scale-105",
+        "group relative rounded-3xl border-4 p-4 transition-all duration-300 hover:scale-105",
         "bg-gradient-to-br shadow-lg hover:shadow-2xl",
         animal.color,
         selected ? "scale-105 border-primary ring-4 ring-primary/30" : "border-card hover:border-primary/50",
@@ -31,8 +31,8 @@ export function AnimalCard({ animal, selected, onSelect }: AnimalCardProps) {
         {animal.name} {animal.emoji}
       </p>
       {selected && (
-        <div className="absolute -top-2 -right-2 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground shadow-lg">
-          ✓ Selected
+        <div className="absolute top-2 right-2 rounded-full bg-primary px-2 py-1 text-xs font-bold text-primary-foreground shadow-lg">
+          Selected
         </div>
       )}
     </button>
