@@ -6,24 +6,27 @@ import { AnimalCard } from "@/components/animal-card"
 import { MessageForm } from "@/components/message-form"
 import { ShareModal } from "@/components/share-modal"
 import { FloatingElements } from "@/components/floating-elements"
+import { supabase } from "@/lib/supabase"
 
 export default function HomePage() {
   const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null)
   const [generatedLink, setGeneratedLink] = useState<string | null>(null)
 
-  const handleGenerate = (to: string, from: string, message: string) => {
+  const handleGenerate = async (to: string, from: string, message: string) => {
     if (!selectedAnimal) return
 
-    const params = new URLSearchParams({
-      animal: selectedAnimal.id,
-      to,
-      from,
-      message,
+    const id = Math.random().toString(36).substring(2, 8)
+
+    await supabase.from("cards").insert({
+     id,
+     animal: selectedAnimal.id,
+     to,
+     from,
+     message,
     })
 
-    const baseUrl = typeof window !== "undefined" ? window.location.origin : ""
-    const link = `${baseUrl}/card/?${params.toString()}`
-    setGeneratedLink(link)
+    const baseUrl = window.location.origin
+    setGeneratedLink(`${baseUrl}/card/${id}`)
   }
 
   const handleCloseModal = () => {

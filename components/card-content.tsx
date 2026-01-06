@@ -6,13 +6,36 @@ import { FloatingElements } from "@/components/floating-elements"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-export function CardContent() {
+type CardData = {
+  animal: string
+  to: string
+  from: string
+  message: string
+}
+
+ export function CardContent(props?: Partial<CardData>) {
   const searchParams = useSearchParams()
 
-  const animalId = searchParams.get("animal") || "bunny"
-  const to = searchParams.get("to") || "Someone Special"
-  const from = searchParams.get("from") || "A Friend"
-  const message = searchParams.get("message") || "You are amazing!"
+  const animalId =
+    props?.animal ??
+    searchParams.get("animal") ??
+    "bunny"
+
+  const to =
+    props?.to ??
+    searchParams.get("to") ??
+    "Someone Special"
+
+  const from =
+    props?.from ??
+    searchParams.get("from") ??
+    "A Friend"
+
+  const message =
+    props?.message ??
+    searchParams.get("message") ??
+    "You are amazing!"
+
 
   const animal = getAnimalById(animalId) || getAnimalById("bunny")!
 
