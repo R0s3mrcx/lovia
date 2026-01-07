@@ -48,7 +48,7 @@ export function CardContent(props?: Partial<CardData>) {
   const [index, setIndex] = useState(0)
 
   // 🌙 night mode
-  const isNight = new Date().getHours() >= 19
+  const isNight = new Date().getHours() >= 20
 
   // ✨ typing animation
   useEffect(() => {
@@ -174,3 +174,4 @@ export function CardContent(props?: Partial<CardData>) {
     </main>
   )
 }
+

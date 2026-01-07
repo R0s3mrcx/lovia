@@ -48,7 +48,7 @@ export async function generateMetadata(
 }
 
 export default async function CardPage({ params }: Props) {
-  const { data } = await supabase
+  let { data } = await supabase
     .from("cards")
     .select("*")
     .eq("id", params.id)
@@ -57,10 +57,13 @@ export default async function CardPage({ params }: Props) {
   if (!data) return null
 
   if (!data.opened_at) {
+    const now = new Date().toISOString()
     await supabase
       .from("cards")
-      .update({ opened_at: new Date().toISOString() })
+      .update({ opened_at: now })
       .eq("id", params.id)
+
+    data.opened_at = now
   }
 
   return (
@@ -69,7 +72,8 @@ export default async function CardPage({ params }: Props) {
       to={data.to}
       from={data.from}
       message={data.message}
-      openedAt={data.opened_at}
+      openedAt={data.opened_at} 
     />
   )
 }
+
