@@ -1,42 +1,75 @@
-"use client"
-
-import { useParams } from "next/navigation"
-import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { CardContent } from "@/components/card-content"
+import { Metadata } from "next"
 
-export default function CardPage() {
-  const { id } = useParams()
-  const [card, setCard] = useState<any>(null)
+type Props = {
+  params: { id: string }
+}
 
-  useEffect(() => {
-    const load = async () => {
-      const { data } = await supabase
-        .from("cards")
-        .select("*")
-        .eq("id", id)
-        .single()
+export async function generateMetadata(
+  { params }: Props
+): Promise<Metadata> {
+  const { data } = await supabase
+    .from("cards")
+    .select("to, from, animal, message")
+    .eq("id", params.id)
+    .single()
 
-      setCard(data)
+  if (!data) {
+    return {
+      title: "A love card 💌",
+      description: "Someone sent you something special"
     }
+  }
 
-    load()
-  }, [id])
+  const title = `💌 A card for ${data.to}`
+  const description = data.message.slice(0, 80) + "…"
 
-  if (!card) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-pink-100 via-purple-50 to-cyan-100">
-        <span className="animate-bounce-soft text-6xl">✨</span>
-      </div>
-    )
+  const ogImage = `https://www.loviaforyou.com/api/og?animal=${data.animal}&to=${encodeURIComponent(
+    data.to
+  )}`
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [ogImage],
+      type: "website"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage]
+    }
+  }
+}
+
+export default async function CardPage({ params }: Props) {
+  const { data } = await supabase
+    .from("cards")
+    .select("*")
+    .eq("id", params.id)
+    .single()
+
+  if (!data) return null
+
+  if (!data.opened_at) {
+    await supabase
+      .from("cards")
+      .update({ opened_at: new Date().toISOString() })
+      .eq("id", params.id)
   }
 
   return (
     <CardContent
-      animal={card.animal}
-      to={card.to}
-      from={card.from}
-      message={card.message}
+      animal={data.animal}
+      to={data.to}
+      from={data.from}
+      message={data.message}
+      openedAt={data.opened_at}
     />
   )
 }

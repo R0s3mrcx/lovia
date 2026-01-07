@@ -1,0 +1,51 @@
+.bunny {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin: auto;
+  transition: all 0.6s ease;
+}
+
+/* 😴 SLEEPING */
+.bunny.sleeping {
+  opacity: 0.8;
+}
+.bunny.sleeping .eye {
+  height: 4px;
+}
+.bunny.sleeping {
+  animation: breathe 4s infinite ease-in-out;
+}
+
+/* 👀 AWAKE */
+.bunny.awakening .eye {
+  height: 14px;
+}
+.bunny.awakening .mouth {
+  border-radius: 0 0 20px 20px;
+}
+
+/* ❤️ HEARTBEAT */
+.bunny.message .heart {
+  animation: beat 1.2s infinite;
+}
+
+@keyframes breathe {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+@keyframes beat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.scene.night {
+  background: radial-gradient(#1a1a2e, #000);
+  color: #ffddee;
+}
+.scene.night::after {
+  content: "✨";
+  position: absolute;
+  animation: float 6s infinite linear;
+}
