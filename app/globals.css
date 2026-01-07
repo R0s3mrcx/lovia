@@ -171,3 +171,15 @@
 .animate-bounce-soft {
   animation: bounce-soft 2s ease-in-out infinite;
 }
+
+.scene.night {
+  background: radial-gradient(circle at top, #2b1055, #000);
+  color: #ffd6e8;
+}
+
+.scene.night::after {
+  content: "✨";
+  position: absolute;
+  animation: float 6s infinite linear;
+}
+
