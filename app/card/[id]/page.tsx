@@ -11,7 +11,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { data } = await supabase
     .from("cards")
-    .select("to, from, animal, message")
+    .select("to, from, animal, message, image_url")
     .eq("id", params.id)
     .single()
 
@@ -22,12 +22,14 @@ export async function generateMetadata(
     }
   }
 
-  const title = `💌 A card for ${data.to}`
+  const title = `A card for ${data.to}`
   const description = data.message.slice(0, 80) + "…"
 
-  const ogImage = `https://www.loviaforyou.com/api/og?animal=${data.animal}&to=${encodeURIComponent(
-    data.to
-  )}`
+  const ogImage = data.image_url
+    ? data.image_url
+    : `https://www.loviaforyou.com/api/og?animal=${data.animal}&to=${encodeURIComponent(
+        data.to
+      )}`
 
   return {
     title,
@@ -69,11 +71,11 @@ export default async function CardPage({ params }: Props) {
   return (
     <CardContent
       animal={data.animal}
+      imageUrl={data.image_url}
       to={data.to}
       from={data.from}
       message={data.message}
-      openedAt={data.opened_at} 
+      openedAt={data.opened_at}
     />
   )
 }
-
