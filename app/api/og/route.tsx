@@ -64,7 +64,7 @@ export async function GET(req: Request) {
             fontSize: 36,
           }}
         >
-          Someone sent you something special 💌
+          A special gift for you 💌
         </div>
 
         {/* Footer */}
