@@ -20,7 +20,6 @@ It is built with **Next.js**, powered by **Supabase**, and deployed automaticall
 ## 🏗️ Architecture
 
 ```
-
 ┌──────────────┐
 │    User      │
 └──────┬───────┘
@@ -36,7 +35,6 @@ It is built with **Next.js**, powered by **Supabase**, and deployed automaticall
 │     Supabase           │
 │  Postgres + REST API   │
 └────────────────────────┘
-
 ```
 
 ---
@@ -91,10 +89,8 @@ npm run dev
 Create a .env.local file:
 
 ```
-
 NEXT_PUBLIC_SUPABASE_URL=your_project_url 
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-
 ```
 
 These variables must also be configured in Azure Static Web Apps.
