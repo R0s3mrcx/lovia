@@ -8,15 +8,13 @@ const nunito = Nunito({
   weight: ["400", "500", "600", "700", "800"],
 })
 
-
-
 export const metadata: Metadata = {
   title: "Lovia – Create magical love cards",
   description: "Create adorable love cards with cute 3D animals — share magical messages with your loved ones on Lovia 💖",
   icons: {
   icon: "/icon.png",
   apple: "/apple-icon.png",
-},
+  },
 }
 
 export const viewport: Viewport = {

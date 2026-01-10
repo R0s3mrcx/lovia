@@ -86,7 +86,7 @@ export function CardContent(props?: Partial<CardData>) {
           <p className="text-xl text-white/90">
             A special gift for you..
           </p>
-          <p className="mt-2 text-sm text-white/70">
+          <p className="mt-2 text-xl text-white/90">
             Tap to wake it up 💕
           </p>
         </div>
@@ -95,7 +95,7 @@ export function CardContent(props?: Partial<CardData>) {
       <div className="relative z-10 w-full max-w-lg">
         <div
           ref={cardRef}
-          className="overflow-hidden rounded-[2rem] border-4 border-primary/30 bg-card shadow-2xl"
+          className="overflow-hidden rounded-[2rem] border-0 border-primary/30 bg-card shadow-2xl"
         >
           {/* IMAGE / ANIMAL */}
           <div className="p-8 pb-16 bg-gradient-to-br from-pink-300 via-purple-300 to-cyan-300">
@@ -118,7 +118,7 @@ export function CardContent(props?: Partial<CardData>) {
                   className={`transition-all duration-700
                     ${
                       stage === "sleep"
-                        ? "opacity-70 scale-95 animate-pulse"
+                        ? "opacity-70 scale-110 animate-pulse"
                         : "opacity-100 scale-100 animate-bounce-soft"
                     }`}
                 />
@@ -132,7 +132,7 @@ export function CardContent(props?: Partial<CardData>) {
                 {to} 💖
               </h2>
 
-              <div className="my-6 rounded-2xl border bg-muted p-6 min-h-[120px]">
+              <div className="my-6 rounded-2xl  bg-muted p-6 min-h-[120px]">
                 <p className="text-center whitespace-pre-wrap">
                   {typedMessage}
                   {!messageFinished && (

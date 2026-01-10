@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import type { Animal } from "@/lib/animals"
+import { animalThemes } from "@/lib/animalThemes"
 
 interface AnimalCardProps {
   animal: Animal
@@ -14,10 +15,12 @@ export function AnimalCard({ animal, selected, onSelect }: AnimalCardProps) {
     <button
       onClick={onSelect}
       className={cn(
-        "group relative rounded-3xl border-4 p-4 transition-all duration-300 hover:scale-105",
-        "bg-gradient-to-br shadow-lg hover:shadow-2xl",
-        animal.color,
-        selected ? "scale-105 border-primary ring-4 ring-primary/30" : "border-card hover:border-primary/50",
+      "group relative rounded-2xl p-4 transition-all",
+      animalThemes[animal.id],
+      "backdrop-blur-md border border-white/40",
+      "hover:scale-[1.04] hover:shadow-xl",
+      animal.color,
+      selected && "ring-2 ring-primary",
       )}
     >
       <div className="relative aspect-square w-full">

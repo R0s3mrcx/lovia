@@ -3,7 +3,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Kawaii pastel theme for magical card app */
 :root {
   --background: oklch(0.98 0.01 320);
   --foreground: oklch(0.35 0.05 320);
