@@ -65,8 +65,13 @@ Lovia was created as a real-world project to explore:
 
 ### 🎬 Demo
 
-![Create & preview](./public/gif/create-preview.gif)
-![Open a card](./public/gif/open-card.gif)
+<p align="center">
+  <img src="./public/gif/create-preview.gif" alt="Create & preview">
+</p>
+<p align="center">
+  <img src="./public/gif/open-card.gif" alt="Open a card">
+</p>
+
 
 ---
 
