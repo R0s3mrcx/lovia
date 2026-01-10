@@ -6,8 +6,7 @@
 ![Next.js](https://img.shields.io/badge/next.js-13+-000000?logo=nextdotjs&logoColor=white)
 ![Azure](https://img.shields.io/badge/azure-static%20web%20apps-0078D4?logo=microsoftazure&logoColor=white)
 ![License](https://img.shields.io/badge/license-source--available-lightgrey)
-![CI](https://github.com/R0s3mrcx/lovia/actions/workflows/main.yml/badge.svg)
-![Deployment](https://img.shields.io/badge/deployment-Azure-green)
+![Deployment Status](https://github.com/R0s3mrcx/lovia/actions/workflows/azure-static-web-apps-purple-coast-0d5c5fc1e.yml/badge.svg)
 
 ---
 
