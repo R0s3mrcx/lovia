@@ -151,6 +151,19 @@ Planned improvements and features:
 
 ---
 
+## 🤝 Contributing
+
+Thank you for your interest in Lovia!  
+
+This project is **source-available** and **not open-source**, so commercial use or redistribution is prohibited.  
+
+If you want to help for learning purposes:
+- You can fork the repo and experiment locally
+- Open issues for feedback or bug reports
+- Suggest improvements via pull requests for educational purposes only
+
+---
+
 ## 📜 License
 
 This project is source-available, not open-source.
