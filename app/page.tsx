@@ -57,6 +57,7 @@ export default function HomePage() {
         <section className="mb-12">
           <h2 className="mb-6 text-center text-2xl font-bold text-foreground">Pick your cute companion</h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-6">
+
             {animals.map((animal) => (
               <AnimalCard
                 key={animal.id}
