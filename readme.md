@@ -5,6 +5,7 @@
 ![Supabase](https://img.shields.io/badge/supabase-DB-3ECF8E?logo=supabase&logoColor=white)
 ![Next.js](https://img.shields.io/badge/next.js-13+-000000?logo=nextdotjs&logoColor=white)
 ![Azure](https://img.shields.io/badge/azure-static%20web%20apps-0078D4?logo=microsoftazure&logoColor=white)
+![License](https://img.shields.io/badge/license-source--available-lightgrey)
 
 ---
 
@@ -14,6 +15,17 @@ Lovia is a modern web application that allows users to create and share digital 
 It is built with **Next.js**, powered by **Supabase**, and deployed automatically using **GitHub Actions** to **Azure Static Web Apps**.
 
 🌐 Live: https://www.loviaforyou.com
+
+---
+
+## 🎯 Motivation
+
+Lovia was created as a real-world project to explore:
+- Short-link architectures for dynamic content
+- Open Graph previews for social sharing
+- CI/CD with Azure Static Web Apps
+- Product-oriented UI/UX decisions
+- Fun, interactive web animations with React and Tailwind
 
 ---
 
@@ -47,6 +59,13 @@ It is built with **Next.js**, powered by **Supabase**, and deployed automaticall
 - 📦 Supabase-powered storage  
 - ⚙️ CI/CD with GitHub Actions  
 - 🌐 Custom domain with HTTPS  
+
+---
+
+### 🎬 Demo
+
+![Open a card](./public/gif/open-card.gif)
+![Create & preview](./public/gif/create-preview.gif)
 
 ---
 
@@ -97,6 +116,26 @@ These variables must also be configured in Azure Static Web Apps.
 
 ---
 
+## 🧪 Testing
+
+Currently, manual testing is performed for all features (UI, short-links, previews).
+Automated tests are planned for future iterations using:
+- Jest + React Testing Library for component/unit tests
+- Cypress for end-to-end tests
+
+Contributions to add testing coverage are welcome.
+
+---
+
+## 🛣 Roadmap 
+
+Planned improvements and features:
+- SEO optimization and analytics
+- Optional monetization features
+- New visual themes and seasonal designs
+
+---
+
 ## 🚢 Deployment
 
 - Automatic deployment via GitHub Actions
@@ -108,7 +147,7 @@ These variables must also be configured in Azure Static Web Apps.
 
 ## 📜 License
 
-This project is source-available.
+This project is source-available, not open-source.
 
 The code is publicly accessible for educational and portfolio purposes,
 but commercial use, redistribution, or cloning for profit is not permitted
