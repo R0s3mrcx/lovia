@@ -6,6 +6,8 @@
 ![Next.js](https://img.shields.io/badge/next.js-13+-000000?logo=nextdotjs&logoColor=white)
 ![Azure](https://img.shields.io/badge/azure-static%20web%20apps-0078D4?logo=microsoftazure&logoColor=white)
 ![License](https://img.shields.io/badge/license-source--available-lightgrey)
+![CI](https://github.com/R0s3mrcx/lovia/actions/workflows/main.yml/badge.svg)
+![Deployment](https://img.shields.io/badge/deployment-Azure-green)
 
 ---
 
@@ -154,4 +156,3 @@ but commercial use, redistribution, or cloning for profit is not permitted
 without explicit permission from the author.
 
 See the LICENSE file for details.
-
