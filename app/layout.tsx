@@ -9,11 +9,38 @@ const nunito = Nunito({
 })
 
 export const metadata: Metadata = {
-  title: "Lovia – Create magical love cards",
-  description: "Create adorable love cards with cute 3D animals — share magical messages with your loved ones on Lovia 💖",
+  title: "Create Magical Digital Love Cards 💖 | Lovia",
+  description:
+    "Create and share a beautiful digital love card with a short link. No signup required. Cute 3D animals included 💖",
+
   icons: {
-  icon: "/icon.png",
-  apple: "/apple-icon.png",
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
+
+  openGraph: {
+    title: "Create Magical Digital Love Cards 💖 | Lovia",
+    description:
+      "Create and share a beautiful digital love card with a short link. No signup required.",
+    url: "https://www.loviaforyou.com",
+    siteName: "Lovia",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Lovia – Create Magical Digital Love Cards",
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Create Magical Digital Love Cards 💖 | Lovia",
+    description:
+      "Create and share a beautiful digital love card with a short link. No signup required.",
+    images: ["/og.png"],
   },
 }
 
@@ -25,12 +52,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={`${nunito.className} antialiased`}>{children}</body>
+      <body className={`${nunito.className} antialiased`}>
+        {children}
+      </body>
     </html>
   )
 }
+

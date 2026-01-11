@@ -46,10 +46,11 @@ export default function HomePage() {
         {/* Header */}
         <header className="mb-12 text-center md:mb-16">
           <h1 className="text-balance text-4xl font-extrabold tracking-tight text-foreground md:text-6xl">
-            Create magical cards ✨
+          Create Magical Digital Love Cards 💖
           </h1>
+
           <p className="mx-auto mt-4 max-w-2xl text-pretty text-lg text-muted-foreground md:text-xl">
-            Choose an adorable 3D animal and write a special message for someone you love
+          Some feelings deserve more than a text.
           </p>
         </header>
 
