@@ -33,7 +33,9 @@ export function CardContent(props?: Partial<CardData>) {
   const musicId     = props?.music     ?? searchParams.get("music")   ?? "none"
 
   const animal    = animalId ? (getAnimalById(animalId) ?? getAnimalById("bunny")) : null
-  const musicOpt  = getMusicById(musicId)
+  const musicSrc  = getMusicById(musicId)?.src
+  const musicEmoji = getMusicById(musicId)?.emoji
+  const musicLabel = getMusicById(musicId)?.label
   const gradient  = (animalId && cardGradients[animalId]) ?? "from-pink-300 via-purple-200 to-rose-200"
 
   const [stage, setStage] = useState<"sleep" | "awake">("sleep")
@@ -52,8 +54,8 @@ export function CardContent(props?: Partial<CardData>) {
   }, [stage, index, fullMessage])
 
   useEffect(() => {
-    if (stage !== "awake" || !musicOpt?.src) return
-    const audio = new Audio(musicOpt.src)
+    if (stage !== "awake" || !musicSrc) return
+    const audio = new Audio(musicSrc)
     audio.loop = true
     audio.volume = 0.35
     audioRef.current = audio
@@ -62,7 +64,7 @@ export function CardContent(props?: Partial<CardData>) {
       audio.pause()
       audio.src = ""
     }
-  }, [stage]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [stage, musicSrc])
 
   const messageFinished = index >= fullMessage.length
 
@@ -91,8 +93,8 @@ export function CardContent(props?: Partial<CardData>) {
           <div className="mb-4 animate-bounce text-5xl">💌</div>
           <p className="text-xl font-bold text-white drop-shadow">A special gift for you…</p>
           <p className="mt-2 text-lg text-white/80">Tap anywhere to open it 💕</p>
-          {musicOpt && musicOpt.id !== "none" && (
-            <p className="mt-2 text-sm text-white/50">{musicOpt.emoji} Music will play</p>
+          {musicSrc && (
+            <p className="mt-2 text-sm text-white/50">{musicEmoji} Music will play</p>
           )}
         </div>
       )}
@@ -142,6 +144,12 @@ export function CardContent(props?: Partial<CardData>) {
               {props?.openedAt && messageFinished && (
                 <p className="mt-4 text-center text-xs text-muted-foreground">
                   Opened at {new Date(props.openedAt).toLocaleTimeString()} 💕
+                </p>
+              )}
+
+              {musicSrc && messageFinished && (
+                <p className="mt-2 text-center text-xs text-muted-foreground">
+                  {musicEmoji} Playing {musicLabel}
                 </p>
               )}
             </div>

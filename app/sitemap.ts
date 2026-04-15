@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next"
+import type { MetadataRoute } from "next"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.loviaforyou.com"
@@ -16,7 +16,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
-    // Dynamic /card/[id] pages are intentionally excluded from sitemap
-    // (they are personal, private, and not meant for search indexing)
   ]
 }
