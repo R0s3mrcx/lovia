@@ -10,6 +10,16 @@ import { supabase } from "@/lib/supabase"
 import { uploadCustomImage } from "@/lib/uploadImage"
 import Link from "next/link"
 
+type CardInsert = {
+  id: string
+  animal: string
+  to: string
+  from: string
+  message: string
+  image_url?: string
+  music?: string
+}
+
 export default function HomePage() {
   const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null)
   const [generatedLink, setGeneratedLink] = useState<string | null>(null)
@@ -57,13 +67,7 @@ export default function HomePage() {
         }
       }
 
-      const payload: Record<string, unknown> = {
-        id,
-        animal: selectedAnimal.id,
-        to,
-        from,
-        message,
-      }
+      const payload: CardInsert = { id, animal: selectedAnimal.id, to, from, message }
       if (image_url) payload.image_url = image_url
       if (music && music !== "none") payload.music = music
 
@@ -103,7 +107,7 @@ export default function HomePage() {
           href="/ideas"
           className="rounded-full border border-primary/30 bg-white/60 px-4 py-2 text-sm font-semibold text-primary backdrop-blur transition-all hover:bg-white/90"
         >
-          Message ideas ✨
+          Message ideas 💝
         </Link>
       </nav>
 
@@ -137,7 +141,7 @@ export default function HomePage() {
             {[
               { n: "1", emoji: "🐾", title: "Pick a companion", desc: "An animal that matches the feeling" },
               { n: "2", emoji: "💌", title: "Write your message", desc: "Add music & a photo if you want" },
-              { n: "3", emoji: "✨", title: "Share the link", desc: "They tap it — magic happens" },
+              { n: "3", emoji: "🫶", title: "Share the link", desc: "They tap it — magic happens" },
             ].map((s) => (
               <div
                 key={s.n}
