@@ -11,12 +11,25 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "Create Magical Digital Love Cards 💖 | Lovia",
   description:
-    "Create and share a beautiful digital love card with a short link. No signup required. Cute 3D animals included 💖",
+    "Create and share a beautiful digital love card with a short link. Add music, your own photo, and a cute companion. No signup required. 💖",
 
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",
   },
+
+  keywords: [
+    "digital love card",
+    "love card online",
+    "cute love card",
+    "send love card free",
+    "digital card for girlfriend",
+    "digital card for boyfriend",
+    "romantic digital card",
+    "love card with music",
+    "anniversary card online",
+    "birthday love card",
+  ],
 
   openGraph: {
     title: "Create Magical Digital Love Cards 💖 | Lovia",
@@ -33,6 +46,7 @@ export const metadata: Metadata = {
       },
     ],
     type: "website",
+    locale: "en_US",
   },
 
   twitter: {
@@ -42,6 +56,10 @@ export const metadata: Metadata = {
       "Create and share a beautiful digital love card with a short link. No signup required.",
     images: ["/og.png"],
   },
+
+  alternates: {
+    canonical: "https://www.loviaforyou.com",
+  },
 }
 
 export const viewport: Viewport = {
@@ -50,17 +68,29 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${nunito.className} antialiased`}>
+        {/* Global structured data for Google */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Lovia",
+              url: "https://www.loviaforyou.com",
+              description:
+                "Create and share magical digital love cards with cute animals, music, and personalized messages.",
+              applicationCategory: "EntertainmentApplication",
+              operatingSystem: "Web",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            }),
+          }}
+        />
         {children}
       </body>
     </html>
   )
 }
-
