@@ -62,7 +62,7 @@ export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
             }
           </button>
 
-          {typeof navigator !== "undefined" && navigator.share && (
+          {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
             <button
               onClick={shareNative}
               className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-border bg-white py-4 text-base font-bold text-foreground transition-all hover:bg-muted"
