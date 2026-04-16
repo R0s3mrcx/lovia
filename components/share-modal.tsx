@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Check, Copy, Share2, Eye } from "lucide-react"
+import { track } from "@/lib/analytics"
 import Link from "next/link"
 
 interface ShareModalProps {
@@ -18,13 +19,19 @@ const giftIdeas = [
 ]
 
 export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied]       = useState(false)
   const [showGifts, setShowGifts] = useState(false)
 
   const copyLink = async () => {
     await navigator.clipboard.writeText(link)
     setCopied(true)
+    track("share_copied", { cardId })
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  const shareNative = () => {
+    track("share_native", { cardId })
+    navigator.share({ url: link, title: "I made you a magic card 💖" })
   }
 
   return (
@@ -33,7 +40,7 @@ export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
 
         <div className="mb-6 text-center">
           <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-3xl">
-            ✨
+            💌
           </div>
           <h2 className="text-2xl font-extrabold text-foreground">Magic card created! 🎉</h2>
           <p className="mt-1 text-sm text-muted-foreground">Share this link with someone special</p>
@@ -57,7 +64,7 @@ export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
 
           {typeof navigator !== "undefined" && navigator.share && (
             <button
-              onClick={() => navigator.share({ url: link, title: "I made you a magic card 💖" })}
+              onClick={shareNative}
               className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-border bg-white py-4 text-base font-bold text-foreground transition-all hover:bg-muted"
             >
               <Share2 className="h-4 w-4" /> Share
@@ -67,6 +74,7 @@ export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
           <Link
             href={`/status/${cardId}`}
             target="_blank"
+            onClick={() => track("status_viewed", { cardId })}
             className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 py-4 text-base font-bold text-primary transition-all hover:bg-primary/10"
           >
             <Eye className="h-4 w-4" />
@@ -101,7 +109,7 @@ export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
             onClick={onClose}
             className="flex w-full items-center justify-center rounded-2xl border-2 border-border bg-white py-4 text-base font-semibold text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
           >
-            Create another card 💖
+            Create another card 💌
           </button>
         </div>
       </div>

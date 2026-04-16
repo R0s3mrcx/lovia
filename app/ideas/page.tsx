@@ -105,7 +105,7 @@ export default function IdeasPage() {
             href="/"
             className="rounded-full bg-primary px-4 py-2 text-sm font-bold text-white shadow hover:opacity-90"
           >
-            Create a card ✨
+            Create a card 💌
           </Link>
         </div>
       </div>
@@ -165,7 +165,7 @@ export default function IdeasPage() {
                     href={`/?prefill=${encodeURIComponent(idea)}`}
                     className="mt-3 inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary opacity-0 transition-all group-hover:opacity-100 hover:bg-primary/20"
                   >
-                    Use this ✨
+                    Use this 🫶
                   </Link>
                 </div>
               ))}
@@ -215,7 +215,7 @@ export default function IdeasPage() {
             href="/"
             className="mt-6 inline-block rounded-full bg-primary px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.03] hover:opacity-90"
           >
-            Create a free card ✨
+            Create a free card 💌
           </Link>
         </div>
       </div>
