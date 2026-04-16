@@ -1,5 +1,5 @@
-// Unit test for the timeAgo helper used in the status page.
-// Extracted and tested in isolation.
+// Tests for the timeAgo helper — extracted and tested in isolation
+// to verify edge cases (singular/plural, boundary conditions).
 
 function timeAgo(date: string): string {
   const diff  = Date.now() - new Date(date).getTime()
@@ -13,28 +13,35 @@ function timeAgo(date: string): string {
 }
 
 describe("timeAgo", () => {
-  it("returns 'just now' for dates less than a minute ago", () => {
-    const date = new Date(Date.now() - 30_000).toISOString()
-    expect(timeAgo(date)).toBe("just now")
+  it("returns 'just now' for less than a minute ago", () => {
+    expect(timeAgo(new Date(Date.now() - 30_000).toISOString())).toBe("just now")
   })
 
-  it("returns singular minute correctly", () => {
-    const date = new Date(Date.now() - 60_000).toISOString()
-    expect(timeAgo(date)).toBe("1 minute ago")
+  it("returns 'just now' for 0 seconds ago", () => {
+    expect(timeAgo(new Date(Date.now()).toISOString())).toBe("just now")
   })
 
-  it("returns plural minutes correctly", () => {
-    const date = new Date(Date.now() - 5 * 60_000).toISOString()
-    expect(timeAgo(date)).toBe("5 minutes ago")
+  it("uses singular for exactly 1 minute", () => {
+    expect(timeAgo(new Date(Date.now() - 60_000).toISOString())).toBe("1 minute ago")
   })
 
-  it("returns hours for dates within the same day", () => {
-    const date = new Date(Date.now() - 3 * 3_600_000).toISOString()
-    expect(timeAgo(date)).toBe("3 hours ago")
+  it("uses plural for multiple minutes", () => {
+    expect(timeAgo(new Date(Date.now() - 5 * 60_000).toISOString())).toBe("5 minutes ago")
   })
 
-  it("returns days for older dates", () => {
-    const date = new Date(Date.now() - 2 * 86_400_000).toISOString()
-    expect(timeAgo(date)).toBe("2 days ago")
+  it("switches to hours at 60 minutes", () => {
+    expect(timeAgo(new Date(Date.now() - 60 * 60_000).toISOString())).toBe("1 hour ago")
+  })
+
+  it("uses plural for multiple hours", () => {
+    expect(timeAgo(new Date(Date.now() - 3 * 3_600_000).toISOString())).toBe("3 hours ago")
+  })
+
+  it("switches to days at 24 hours", () => {
+    expect(timeAgo(new Date(Date.now() - 24 * 3_600_000).toISOString())).toBe("1 day ago")
+  })
+
+  it("uses plural for multiple days", () => {
+    expect(timeAgo(new Date(Date.now() - 2 * 86_400_000).toISOString())).toBe("2 days ago")
   })
 })

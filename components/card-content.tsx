@@ -5,6 +5,7 @@ import { getAnimalById } from "@/lib/animals"
 import { getMusicById } from "@/lib/music"
 import { cardGradients } from "@/lib/animalThemes"
 import { FloatingElements } from "@/components/floating-elements"
+import { track } from "@/lib/analytics"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useEffect, useRef, useState } from "react"
@@ -22,8 +23,8 @@ type CardData = {
 
 export function CardContent(props?: Partial<CardData>) {
   const searchParams = useSearchParams()
-  const cardRef = useRef<HTMLDivElement>(null)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const cardRef      = useRef<HTMLDivElement>(null)
+  const audioRef     = useRef<HTMLAudioElement | null>(null)
 
   const animalId    = props?.animal    ?? searchParams.get("animal")  ?? undefined
   const imageUrl    = props?.imageUrl  ?? searchParams.get("image")   ?? undefined
@@ -32,15 +33,14 @@ export function CardContent(props?: Partial<CardData>) {
   const fullMessage = props?.message   ?? searchParams.get("message") ?? "You are amazing!"
   const musicId     = props?.music     ?? searchParams.get("music")   ?? "none"
 
-  const animal    = animalId ? (getAnimalById(animalId) ?? getAnimalById("bunny")) : null
-  const musicSrc  = getMusicById(musicId)?.src
-  const musicEmoji = getMusicById(musicId)?.emoji
-  const musicLabel = getMusicById(musicId)?.label
-  const gradient  = (animalId && cardGradients[animalId]) ?? "from-pink-300 via-purple-200 to-rose-200"
+  const animal     = animalId ? (getAnimalById(animalId) ?? getAnimalById("bunny")) : null
+  const musicOpt   = getMusicById(musicId)
+  const musicSrc   = musicOpt?.src
+  const gradient   = (animalId && cardGradients[animalId]) ?? "from-pink-300 via-purple-200 to-rose-200"
 
-  const [stage, setStage] = useState<"sleep" | "awake">("sleep")
+  const [stage, setStage]               = useState<"sleep" | "awake">("sleep")
   const [typedMessage, setTypedMessage] = useState("")
-  const [index, setIndex] = useState(0)
+  const [index, setIndex]               = useState(0)
 
   const isNight = typeof window !== "undefined" ? new Date().getHours() >= 20 : false
 
@@ -56,7 +56,7 @@ export function CardContent(props?: Partial<CardData>) {
   useEffect(() => {
     if (stage !== "awake" || !musicSrc) return
     const audio = new Audio(musicSrc)
-    audio.loop = true
+    audio.loop   = true
     audio.volume = 0.35
     audioRef.current = audio
     audio.play().catch(() => {})
@@ -65,6 +65,12 @@ export function CardContent(props?: Partial<CardData>) {
       audio.src = ""
     }
   }, [stage, musicSrc])
+
+  const wake = () => {
+    if (stage !== "sleep") return
+    setStage("awake")
+    track("card_opened", { animal: animalId ?? "unknown", hasPhoto: !!imageUrl, music: musicId })
+  }
 
   const messageFinished = index >= fullMessage.length
 
@@ -75,6 +81,7 @@ export function CardContent(props?: Partial<CardData>) {
     a.download = "lovia-card.png"
     a.href = dataUrl
     a.click()
+    track("card_saved", { animal: animalId ?? "unknown" })
   }
 
   const bgClass = isNight
@@ -83,7 +90,7 @@ export function CardContent(props?: Partial<CardData>) {
 
   return (
     <main
-      onClick={() => stage === "sleep" && setStage("awake")}
+      onClick={wake}
       className={`relative flex min-h-screen cursor-pointer items-center justify-center overflow-hidden p-4 ${bgClass}`}
     >
       <FloatingElements />
@@ -94,7 +101,7 @@ export function CardContent(props?: Partial<CardData>) {
           <p className="text-xl font-bold text-white drop-shadow">A special gift for you…</p>
           <p className="mt-2 text-lg text-white/80">Tap anywhere to open it 💕</p>
           {musicSrc && (
-            <p className="mt-2 text-sm text-white/50">{musicEmoji} Music will play</p>
+            <p className="mt-2 text-sm text-white/50">{musicOpt?.emoji} Music will play</p>
           )}
         </div>
       )}
@@ -127,7 +134,7 @@ export function CardContent(props?: Partial<CardData>) {
           {stage === "awake" && (
             <div className="-mt-8 rounded-t-[2rem] bg-white px-6 py-8">
               <h2 className="text-center text-3xl font-extrabold text-foreground">
-                {to} 💖
+                {to} 🫶
               </h2>
 
               <div className="my-5 min-h-[100px] rounded-2xl bg-muted p-5">
@@ -138,7 +145,7 @@ export function CardContent(props?: Partial<CardData>) {
               </div>
 
               <h3 className="text-center text-xl font-bold text-foreground">
-                — {from} ✨
+                — {from} 💖
               </h3>
 
               {props?.openedAt && messageFinished && (
@@ -149,7 +156,7 @@ export function CardContent(props?: Partial<CardData>) {
 
               {musicSrc && messageFinished && (
                 <p className="mt-2 text-center text-xs text-muted-foreground">
-                  {musicEmoji} Playing {musicLabel}
+                  {musicOpt?.emoji} Playing {musicOpt?.label}
                 </p>
               )}
             </div>
@@ -167,7 +174,7 @@ export function CardContent(props?: Partial<CardData>) {
             </Button>
             <Link href="/">
               <Button className="w-full rounded-2xl py-5 font-bold">
-                Create your own card ✨
+                Create your own card 💌
               </Button>
             </Link>
           </div>
