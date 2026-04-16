@@ -2,10 +2,11 @@
 
 ![Next.js](https://img.shields.io/badge/next.js-14-000000?logo=nextdotjs&logoColor=white)
 ![React](https://img.shields.io/badge/react-18-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/typescript-5-3178C6?logo=typescript&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwind-3-38B2AC?logo=tailwind-css&logoColor=white)
 ![Supabase](https://img.shields.io/badge/supabase-postgres-3ECF8E?logo=supabase&logoColor=white)
 ![Azure](https://img.shields.io/badge/azure-static%20web%20apps-0078D4?logo=microsoftazure&logoColor=white)
-![License](https://img.shields.io/badge/license-source--available-lightgrey)
+![Tests](https://img.shields.io/badge/tests-17%20passing-brightgreen)
 ![Deploy](https://github.com/R0s3mrcx/lovia/actions/workflows/azure-static-web-apps-purple-coast-0d5c5fc1e.yml/badge.svg)
 
 Create and share magical digital love cards — with cute companions, background music, and a personalized message — all through a single shareable link. No account required.
@@ -30,35 +31,41 @@ Create and share magical digital love cards — with cute companions, background
 - **Shareable link** — every card gets a unique short URL (e.g. `/card/abc123`)
 - **Open tracking** — see when your card was opened via the status page
 - **Open Graph previews** — cards look great when shared on WhatsApp, iMessage, Instagram
+- **Rate limiting** — middleware protects the API from spam (5 cards/IP/minute)
+- **Analytics** — `card_created`, `card_opened`, `share_copied` events via Vercel Analytics
 - **No signup** — create and share in under a minute, completely free
 
 ---
 
 ## Tech stack
 
-| Layer    | Technology                         |
-|----------|------------------------------------|
-| Frontend | Next.js 14 (App Router, React 18)  |
-| Styling  | Tailwind CSS                       |
-| Database | Supabase (PostgreSQL + Storage)    |
-| Hosting  | Azure Static Web Apps              |
-| CI/CD    | GitHub Actions                     |
+| Layer      | Technology                         |
+|------------|------------------------------------|
+| Frontend   | Next.js 14 (App Router, React 18)  |
+| Language   | TypeScript 5 (strict mode)         |
+| Styling    | Tailwind CSS                       |
+| Database   | Supabase (PostgreSQL + Storage)    |
+| Analytics  | Vercel Analytics                   |
+| Hosting    | Azure Static Web Apps              |
+| CI/CD      | GitHub Actions                     |
+| Tests      | Jest (17 passing)                  |
 
 ---
 
 ## Architecture
 
 ```
-User
- │
- ▼
-Next.js — Azure Static Web Apps
- │
- ▼
-Supabase — PostgreSQL (cards) + Storage (card-images)
+Browser
+  │
+  ├── GET  /card/[id]     → Next.js Server Component → Supabase (read card)
+  ├── POST /api/cards     → Next.js Route Handler    → Supabase (write card)
+  │         ↑
+  │     Middleware (rate limiting: 5 req/IP/min)
+  │
+  └── Storage: card-images bucket (Supabase) for custom photos
 ```
 
-Card data (recipient, message, animal, music choice, optional photo URL) is stored in a `cards` table. Photos are uploaded to a Supabase Storage bucket and served via public URL. Each card is identified by a 6-character random ID.
+Card data is stored in a `cards` table. Photos are uploaded to a Supabase Storage bucket and served via public CDN URL. Each card is identified by a 6-character random ID. The `opened_at` timestamp is written on first view, enabling open tracking.
 
 ---
 
@@ -109,16 +116,13 @@ create table cards (
 **Storage — `card-images` bucket:**
 
 1. Create a bucket named `card-images` and set it to **Public**
-2. Add a Storage Policy allowing anonymous uploads:
-   - Operation: `INSERT`
-   - Role: `anon`
-   - Policy: `true`
+2. Add a Storage Policy: operation `INSERT`, role `anon`, definition `true`
 
 ---
 
 ## Music
 
-Drop three royalty-free MP3s into `/public/music/` (Pixabay Music works well — no attribution required):
+Drop three royalty-free MP3s into `/public/music/`:
 
 ```
 public/
@@ -128,16 +132,32 @@ public/
     happy.mp3
 ```
 
-The app degrades gracefully if the files are missing.
+Pixabay Music is a good source — no attribution required. The app degrades gracefully if the files are missing.
+
+---
+
+## Testing
+
+```bash
+npm test          # run all tests
+npm run test:watch  # watch mode
+```
+
+17 unit and integration tests covering:
+
+- `getAnimalById` — correct lookup, unknown IDs, uniqueness invariants
+- `getMusicById` — correct lookup, mp3 path format, options structure
+- `timeAgo` — all time ranges, singular/plural edge cases
+- `POST /api/cards` — valid payload, missing fields, input length validation (Supabase mocked)
 
 ---
 
 ## Deployment
 
-Deployment is automatic. Any push to `main` triggers the GitHub Actions workflow, which builds the Next.js app and deploys it to Azure Static Web Apps.
+Any push to `main` triggers the GitHub Actions workflow, which builds and deploys to Azure Static Web Apps automatically.
 
 ---
 
 ## License
 
-Source-available. The code is public for educational and portfolio purposes. Commercial use, redistribution, or cloning for profit is not permitted without explicit permission from the author. See [LICENSE](./LICENSE) for details.
+Source-available. Public for educational and portfolio purposes. Commercial use or redistribution without explicit permission from the author is not permitted. See [LICENSE](./LICENSE) for details.

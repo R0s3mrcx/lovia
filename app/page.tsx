@@ -7,27 +7,15 @@ import { MessageForm } from "@/components/message-form"
 import { ShareModal } from "@/components/share-modal"
 import { FloatingElements } from "@/components/floating-elements"
 import { supabase } from "@/lib/supabase"
-import { uploadCustomImage } from "@/lib/uploadImage"
+import { useCard } from "@/hooks/use-card"
 import Link from "next/link"
-
-type CardInsert = {
-  id: string
-  animal: string
-  to: string
-  from: string
-  message: string
-  image_url?: string
-  music?: string
-}
 
 export default function HomePage() {
   const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null)
-  const [generatedLink, setGeneratedLink] = useState<string | null>(null)
-  const [generatedId, setGeneratedId] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [cardCount, setCardCount] = useState<number | null>(null)
   const formRef = useRef<HTMLDivElement>(null)
+
+  const { loading, error, generatedId, generatedLink, generate, reset } = useCard({ selectedAnimal })
 
   useEffect(() => {
     supabase
@@ -44,55 +32,13 @@ export default function HomePage() {
     }
   }, [selectedAnimal])
 
-  const handleGenerate = async (
-    to: string,
-    from: string,
-    message: string,
-    photo?: File,
-    music?: string
-  ) => {
-    if (!selectedAnimal) return
-    setLoading(true)
-    setError(null)
-
-    try {
-      const id = Math.random().toString(36).substring(2, 8)
-      let image_url: string | undefined
-
-      if (photo) {
-        try {
-          image_url = await uploadCustomImage(photo)
-        } catch {
-          setError("Photo upload failed — the card was created without it.")
-        }
-      }
-
-      const payload: CardInsert = { id, animal: selectedAnimal.id, to, from, message }
-      if (image_url) payload.image_url = image_url
-      if (music && music !== "none") payload.music = music
-
-      const { error: insertError } = await supabase.from("cards").insert(payload)
-      if (insertError) throw new Error(insertError.message)
-
-      setGeneratedId(id)
-      setGeneratedLink(`${window.location.origin}/card/${id}`)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong — please try again.")
-    } finally {
-      setLoading(false)
-    }
+  const handleSelectAnimal = (animal: Animal) => {
+    setSelectedAnimal(animal)
   }
 
   const handleCloseModal = () => {
-    setGeneratedLink(null)
-    setGeneratedId(null)
+    reset()
     setSelectedAnimal(null)
-    setError(null)
-  }
-
-  const handleSelectAnimal = (animal: Animal) => {
-    setSelectedAnimal(animal)
-    setError(null)
   }
 
   return (
@@ -204,7 +150,9 @@ export default function HomePage() {
           <section ref={formRef} className="mx-auto max-w-lg scroll-mt-8 pt-2">
             <MessageForm
               selectedAnimal={selectedAnimal}
-              onGenerate={handleGenerate}
+              onGenerate={(to, from, message, photo, music) =>
+                generate({ to, from, message, photo, music })
+              }
               loading={loading}
             />
           </section>
