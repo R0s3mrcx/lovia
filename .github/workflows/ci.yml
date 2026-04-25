@@ -21,7 +21,8 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm ci
-      - run: npm run lint
+      # next lint usa el ESLint de node_modules directamente, sin buscarlo en PATH
+      - run: npx next lint
 
   test:
     name: Test
