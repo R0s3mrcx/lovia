@@ -1,0 +1,146 @@
+# ============================================================
+# KUBERNETES - deployment.yml
+# ============================================================
+# Kubernetes (K8s) es el sistema de orquestación de contenedores
+# más usado en el mundo. Gestiona automáticamente:
+#   - Cuántas instancias de tu app corren (réplicas)
+#   - Reinicios si la app se cae
+#   - Actualizaciones sin downtime (rolling updates)
+#   - Escalado automático según tráfico
+#
+# Para probarlo localmente:
+#   1. Instala minikube: https://minikube.sigs.k8s.io
+#   2. minikube start
+#   3. kubectl apply -f k8s/
+#   4. minikube service lovia-service
+# ============================================================
+
+---
+# DEPLOYMENT: define cómo correr la app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lovia-deployment
+  namespace: default
+  labels:
+    app: lovia
+    version: "1.0"
+    environment: demo
+spec:
+  replicas: 2                    # Corre 2 instancias en paralelo (alta disponibilidad)
+  
+  selector:
+    matchLabels:
+      app: lovia
+
+  # Estrategia de actualización: Rolling Update
+  # Actualiza de a una réplica para que nunca haya downtime
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1          # Máximo 1 pod caído durante update
+      maxSurge: 1                # Puede crear 1 pod extra durante update
+
+  template:
+    metadata:
+      labels:
+        app: lovia
+    spec:
+      containers:
+        - name: lovia
+          image: tu-usuario/lovia:latest    # Cambia por tu imagen de Docker Hub o ACR
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+
+          # Variables de entorno desde Kubernetes Secrets (no hardcodeadas)
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"
+            - name: NEXT_PUBLIC_SUPABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: lovia-secrets       # Nombre del Secret de K8s
+                  key: supabase-url
+            - name: NEXT_PUBLIC_SUPABASE_ANON_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lovia-secrets
+                  key: supabase-anon-key
+
+          # Límites de recursos: evita que un pod consuma todo el servidor
+          resources:
+            requests:
+              memory: "128Mi"     # Mínimo garantizado
+              cpu: "100m"         # 100 milicores = 0.1 CPU
+            limits:
+              memory: "256Mi"     # Máximo permitido
+              cpu: "200m"         # Máximo 0.2 CPU
+
+          # Liveness Probe: K8s reinicia el pod si esto falla
+          # "¿Está vivo el proceso?"
+          livenessProbe:
+            httpGet:
+              path: /api/status
+              port: 3000
+            initialDelaySeconds: 30   # Espera 30s antes de empezar a verificar
+            periodSeconds: 10         # Verifica cada 10s
+            failureThreshold: 3       # Reinicia si falla 3 veces seguidas
+
+          # Readiness Probe: K8s no manda tráfico si esto falla
+          # "¿Está listo para recibir peticiones?"
+          readinessProbe:
+            httpGet:
+              path: /api/status
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            failureThreshold: 3
+
+---
+# SERVICE: expone el Deployment como un endpoint de red
+# Los pods son temporales, el Service tiene IP/DNS estable
+apiVersion: v1
+kind: Service
+metadata:
+  name: lovia-service
+  namespace: default
+  labels:
+    app: lovia
+spec:
+  type: NodePort            # Para minikube local. En cloud usa LoadBalancer
+  selector:
+    app: lovia              # Apunta a pods con label app=lovia
+  ports:
+    - protocol: TCP
+      port: 80              # Puerto del Service
+      targetPort: 3000      # Puerto del contenedor
+      nodePort: 30080       # Puerto en el nodo (solo NodePort)
+
+---
+# HORIZONTAL POD AUTOSCALER: escala automáticamente
+# Si el CPU supera 70%, crea más pods (hasta 5)
+# Si el CPU baja, elimina pods (mínimo 2)
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: lovia-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: lovia-deployment
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70    # Escala si CPU > 70%

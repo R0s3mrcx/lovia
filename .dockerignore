@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+.git
+.github
+*.md
+.env
+.env.*
+.env.local
+.env.*.local
+.env.sentry-build-plugin
+terraform
+k8s
+monitoring
+jest.config.ts
+__tests__

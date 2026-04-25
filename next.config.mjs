@@ -1,9 +1,16 @@
+import { withSentryConfig } from "@sentry/nextjs"
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  trailingSlash: true,
+  output: "standalone",
   images: {
     unoptimized: true,
   },
 }
 
-export default nextConfig
+export default withSentryConfig(nextConfig, {
+  org: "fabricio-farro",
+  project: "lovia",
+  silent: !process.env.CI,
+  widenClientFileUpload: true,
+})

@@ -1,0 +1,107 @@
+# ============================================================
+# GITHUB ACTIONS - terraform.yml
+# ============================================================
+# Este workflow gestiona la infraestructura con Terraform.
+#
+# Se ejecuta cuando cambias archivos en /terraform
+# (no cuando cambias código de la app)
+#
+# FLUJO:
+#   1. En PR → solo hace "plan" (te muestra qué cambiaría)
+#   2. En push a main → hace "apply" (crea/modifica la infra)
+# ============================================================
+
+name: "Infrastructure - Terraform"
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["terraform/**"]    # Solo cuando cambien archivos de terraform
+  pull_request:
+    paths: ["terraform/**"]
+
+jobs:
+  terraform:
+    name: "🏗️ Terraform"
+    runs-on: ubuntu-latest
+    environment: production
+
+    # Permisos para que GitHub Actions pueda leer el token de OpenID
+    permissions:
+      contents: read
+      pull-requests: write       # Para comentar en PRs
+
+    defaults:
+      run:
+        working-directory: terraform   # Todos los comandos corren en /terraform
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.0"
+
+      # Login en Azure usando Service Principal
+      - name: Login en Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          # AZURE_CREDENTIALS es un JSON con client_id, secret, tenant_id, subscription_id
+          # Lo generas con: az ad sp create-for-rbac --name "lovia-terraform" --role Contributor
+
+      - name: Terraform Init
+        run: terraform init
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Terraform Validate
+        run: terraform validate   # Verifica que la sintaxis es correcta
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          terraform plan \
+            -var="supabase_url=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" \
+            -var="supabase_anon_key=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
+            -var="sentry_dsn=${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}" \
+            -no-color \
+            -out=tfplan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # En Pull Requests, comenta el plan en el PR para que se pueda revisar
+      - name: Comentar Plan en PR
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const output = `#### 🏗️ Terraform Plan
+            \`\`\`
+            ${{ steps.plan.outputs.stdout }}
+            \`\`\`
+            *Aprueba el PR para aplicar estos cambios*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      # Solo aplica en push a main (no en PRs)
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve tfplan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}

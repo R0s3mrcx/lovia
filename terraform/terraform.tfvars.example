@@ -1,0 +1,26 @@
+# ============================================================
+# TERRAFORM - terraform.tfvars.example
+# ============================================================
+# Este archivo es un EJEMPLO de cómo configurar tus variables.
+#
+# INSTRUCCIONES:
+#   1. Copia este archivo: cp terraform.tfvars.example terraform.tfvars
+#   2. Rellena los valores reales en terraform.tfvars
+#   3. NUNCA subas terraform.tfvars a Git (agrega al .gitignore)
+#
+# Los valores sensibles (secrets) los puedes pasar también como:
+#   terraform apply -var="supabase_url=tu-url"
+# O con variables de entorno:
+#   export TF_VAR_supabase_url="tu-url"
+# ============================================================
+
+project_name = "lovia"
+environment  = "prod"
+location     = "West Europe"
+
+# Copia estos valores de tu proyecto en supabase.com
+supabase_url      = "https://TU-PROJECT-ID.supabase.co"
+supabase_anon_key = "eyTU-CLAVE-ANONIMA-DE-SUPABASE"
+
+# Copia esto de sentry.io después de crear el proyecto
+sentry_dsn = "https://TU-DSN@oXXXXXX.ingest.sentry.io/XXXXXXX"
