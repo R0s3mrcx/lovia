@@ -8,6 +8,7 @@ import { ShareModal } from "@/components/share-modal"
 import { FloatingElements } from "@/components/floating-elements"
 import { supabase } from "@/lib/supabase"
 import { useCard } from "@/hooks/use-card"
+import { MisiaToast } from "@/components/misia-toast"
 import Link from "next/link"
 
 export default function HomePage() {
@@ -44,6 +45,7 @@ export default function HomePage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-pink-100 via-purple-50 to-cyan-100">
       <FloatingElements />
+      <MisiaToast /> 
 
       <nav className="relative z-20 mx-auto flex max-w-6xl items-center justify-between px-5 pt-5 md:pt-7">
         <span className="text-2xl font-extrabold tracking-tight text-primary md:text-3xl">
