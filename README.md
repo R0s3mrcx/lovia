@@ -13,7 +13,7 @@
 ![Grafana](https://img.shields.io/badge/grafana-dashboards-F46800?logo=grafana&logoColor=white)
 ![Sentry](https://img.shields.io/badge/sentry-monitoring-362D59?logo=sentry&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-17%20passing-brightgreen)
-![Deploy](https://github.com/R0s3mrcx/lovia/actions/workflows/azure-static-web-apps-purple-coast-0d5c5fc1e.yml/badge.svg)
+![Deploy](https://github.com/R0s3mrcx/lovia/actions/workflows/deploy.yml/badge.svg)
 
 Cloud-native application for creating and sharing digital love cards — with cute companions, background music, and a personalized message — all through a single shareable link. No account required.
 
