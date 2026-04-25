@@ -189,6 +189,10 @@ Plus default Node.js metrics: heap usage, CPU, event loop lag, garbage collectio
 
 **Grafana dashboard** (`monitoring/lovia-dashboard.json`) — import directly into Grafana for real-time panels on card creation rate, HTTP errors, memory, CPU, event loop lag, and GC time.
 
+<p align="center">
+  <img src="./public/grafana-dashboard.png" alt="Grafana DevOps Dashboard" width="900">
+</p>
+
 **Sentry** captures unhandled errors and performance traces across client and server, with source maps uploaded on every deploy.
 
 ---
