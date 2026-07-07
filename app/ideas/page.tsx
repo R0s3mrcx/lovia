@@ -217,13 +217,13 @@ export default function IdeasPage() {
             href="/"
             className="mt-6 inline-block rounded-full bg-primary px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.03] hover:opacity-90"
           >
-            Create a free card 💌
+            Create a free card
           </Link>
         </div>
       </div>
 
       <footer className="py-8 text-center text-sm text-muted-foreground">
-        Made with 💚 to spread love around the world · <Link href="/" className="underline">loviaforyou.com</Link>
+        Made with 💚 to spread love around the world
       </footer>
     </main>
   )

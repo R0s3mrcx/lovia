@@ -81,7 +81,7 @@ export function MessageForm({ selectedAnimal, onGenerate, loading }: MessageForm
       <form onSubmit={handleSubmit} className="space-y-5">
 
         <div className="space-y-2">
-          <Label htmlFor="to" className="text-base font-semibold">To 🫶</Label>
+          <Label htmlFor="to" className="text-base font-semibold">To</Label>
           <Input
             id="to"
             placeholder="Who is this card for?"
@@ -93,7 +93,7 @@ export function MessageForm({ selectedAnimal, onGenerate, loading }: MessageForm
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message" className="text-base font-semibold">Your Message 💌</Label>
+          <Label htmlFor="message" className="text-base font-semibold">Your Message</Label>
           <Textarea
             id="message"
             placeholder="Write something special..."
@@ -105,7 +105,7 @@ export function MessageForm({ selectedAnimal, onGenerate, loading }: MessageForm
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="from" className="text-base font-semibold">From 💝</Label>
+          <Label htmlFor="from" className="text-base font-semibold">From</Label>
           <Input
             id="from"
             placeholder="Your name"
@@ -118,7 +118,7 @@ export function MessageForm({ selectedAnimal, onGenerate, loading }: MessageForm
 
         <div className="space-y-3">
           <Label className="text-base font-semibold">
-            Add a photo 📸{" "}
+            Add a photo{" "}
             <span className="text-xs font-normal text-muted-foreground">(optional)</span>
           </Label>
 
@@ -184,7 +184,7 @@ export function MessageForm({ selectedAnimal, onGenerate, loading }: MessageForm
           disabled={loading}
           className="w-full rounded-2xl bg-primary py-7 text-lg font-bold text-primary-foreground shadow-lg transition-all hover:scale-[1.02] disabled:opacity-60"
         >
-          {loading ? "Creating magic... 💌" : "Create magic card 💌"}
+          {loading ? "Creating magic... " : "Create magic card"}
         </Button>
       </form>
     </div>

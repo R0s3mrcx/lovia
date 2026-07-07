@@ -97,9 +97,9 @@ export function CardContent(props?: Partial<CardData>) {
 
       {stage === "sleep" && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center">
-          <div className="mb-4 animate-bounce text-5xl">💌</div>
+          <div className="mb-4 animate-bounce text-5xl">💕</div>
           <p className="text-xl font-bold text-white drop-shadow">A special gift for you…</p>
-          <p className="mt-2 text-lg text-white/80">Tap anywhere to open it 💕</p>
+          <p className="mt-2 text-lg text-white/80">Tap anywhere to open it</p>
           {musicSrc && (
             <p className="mt-2 text-sm text-white/50">{musicOpt?.emoji} Music will play</p>
           )}
@@ -134,7 +134,7 @@ export function CardContent(props?: Partial<CardData>) {
           {stage === "awake" && (
             <div className="-mt-8 rounded-t-[2rem] bg-white px-6 py-8">
               <h2 className="text-center text-3xl font-extrabold text-foreground">
-                {to} 🫶
+                {to}
               </h2>
 
               <div className="my-5 min-h-[100px] rounded-2xl bg-muted p-5">
@@ -145,7 +145,7 @@ export function CardContent(props?: Partial<CardData>) {
               </div>
 
               <h3 className="text-center text-xl font-bold text-foreground">
-                — {from} 💖
+                - {from}
               </h3>
 
               {props?.openedAt && messageFinished && (
@@ -170,11 +170,11 @@ export function CardContent(props?: Partial<CardData>) {
               variant="outline"
               className="w-full rounded-2xl border-2 border-white/60 bg-white/70 py-5 font-semibold backdrop-blur"
             >
-              Save this moment 💾
+              Save this moment
             </Button>
             <Link href="/">
               <Button className="w-full rounded-2xl py-5 font-bold">
-                Create your own card 💌
+                Create your own card
               </Button>
             </Link>
           </div>

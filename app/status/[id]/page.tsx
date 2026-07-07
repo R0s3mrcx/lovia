@@ -82,7 +82,7 @@ export default async function StatusPage({ params }: Props) {
               : "bg-gradient-to-r from-yellow-100 to-amber-100 text-amber-700"
             }`}
           >
-            {opened ? "💌 Opened!" : "⏳ Not opened yet"}
+            {opened ? "💕 Opened!" : "⏳ Not opened yet"}
           </div>
 
           <div className="mt-5 space-y-2.5 rounded-2xl bg-muted/50 p-4 text-sm">
@@ -93,7 +93,7 @@ export default async function StatusPage({ params }: Props) {
             {opened && (
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Opened</span>
-                <span className="font-semibold text-emerald-600">{timeAgo(data.opened_at)} 💕</span>
+                <span className="font-semibold text-emerald-600">{timeAgo(data.opened_at)} </span>
               </div>
             )}
             <div className="flex items-center justify-between">
@@ -106,7 +106,7 @@ export default async function StatusPage({ params }: Props) {
 
           {!opened && (
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Refresh this page to check again 🔄
+              Refresh this page to check again
             </p>
           )}
 
@@ -127,19 +127,19 @@ export default async function StatusPage({ params }: Props) {
             rel="noopener noreferrer"
             className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-primary/30 bg-white/80 py-4 text-base font-bold text-primary shadow backdrop-blur transition-all hover:bg-white"
           >
-            👁️ Preview the card
+            Preview the card
           </a>
           <Link
             href="/"
             className="flex w-full items-center justify-center rounded-2xl bg-primary py-4 text-base font-bold text-white shadow transition-all hover:opacity-90"
           >
-            ✨ Create another card
+            Create another card
           </Link>
         </div>
 
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          Made with 💚 · loviaforyou.com
-        </p>
+      <footer className="py-8 text-center text-sm text-muted-foreground">
+        Made with 💚 to spread love around the world
+      </footer>
       </div>
     </main>
   )

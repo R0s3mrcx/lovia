@@ -40,9 +40,9 @@ export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
 
         <div className="mb-6 text-center">
           <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-3xl">
-            💌
+            💕
           </div>
-          <h2 className="text-2xl font-extrabold text-foreground">Magic card created! 🎉</h2>
+          <h2 className="text-2xl font-extrabold text-foreground">Magic card created!</h2>
           <p className="mt-1 text-sm text-muted-foreground">Share this link with someone special</p>
         </div>
 
@@ -78,7 +78,7 @@ export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
             className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 py-4 text-base font-bold text-primary transition-all hover:bg-primary/10"
           >
             <Eye className="h-4 w-4" />
-            See if they opened it 👀
+            See if they opened it
           </Link>
 
           <button
@@ -109,7 +109,7 @@ export function ShareModal({ link, cardId, onClose }: ShareModalProps) {
             onClick={onClose}
             className="flex w-full items-center justify-center rounded-2xl border-2 border-border bg-white py-4 text-base font-semibold text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
           >
-            Create another card 💌
+            Create another card
           </button>
         </div>
       </div>
