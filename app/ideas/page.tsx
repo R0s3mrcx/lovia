@@ -41,7 +41,7 @@ const categories = [
     anchor: "anniversary",
     ideas: [
       "Another year around the sun with you, and I'd choose it every time.",
-      "Here's to us — the best decision I ever made.",
+      "Here's to us... the best decision I ever made.",
       "You've made every year better than the last.",
       "I love you more today than I did yesterday, and less than I will tomorrow.",
       "Thank you for a year full of memories I'll treasure forever.",
@@ -52,7 +52,7 @@ const categories = [
     anchor: "birthday",
     ideas: [
       "Happy birthday to the person who makes my world so much brighter.",
-      "Today the world got a little luckier — because it gets another year with you.",
+      "Today the world got a little luckier, because it gets another year with you.",
       "Wishing the most incredible year to the most incredible person I know.",
       "I'm so glad you were born. The world is better with you in it.",
       "May this year bring you everything you've always wanted.",
@@ -62,7 +62,7 @@ const categories = [
     title: "👯 Friendship",
     anchor: "friendship",
     ideas: [
-      "I don't know what I'd do without you — and I never want to find out.",
+      "I don't know what I'd do without you and I never want to find out.",
       "You're not just my best friend, you're my chosen family.",
       "Thank you for being the person I can call at 3am.",
       "Our friendship is the kind that doesn't need explanation.",
@@ -75,7 +75,7 @@ const categories = [
     ideas: [
       "I'm sorry. You deserve better from me, and I mean to do better.",
       "I hate that I hurt you. You matter too much to me for me to let this go.",
-      "Words feel small right now, but I need you to know — I'm truly sorry.",
+      "Words feel small right now, but I need you to know. I'm truly sorry.",
       "I was wrong. I'm sorry, and I love you.",
       "Please give me the chance to show you how much you mean to me.",
     ],
@@ -86,7 +86,7 @@ const categories = [
     ideas: [
       "Sweet dreams, my love. I'll be thinking of you until morning.",
       "Close your eyes knowing that someone loves you more than words can say.",
-      "Goodnight — may your dreams be as wonderful as you are.",
+      "Goodnight may your dreams be as wonderful as you are.",
       "The last thing I think about every night is you.",
       "Sleep tight. Tomorrow I get to love you all over again.",
     ],
@@ -115,10 +115,10 @@ export default function IdeasPage() {
         {/* Hero */}
         <header className="mb-14 text-center">
           <h1 className="text-4xl font-extrabold tracking-tight text-foreground md:text-5xl">
-            Love Card Message Ideas 💌
+            Love Card Message Ideas
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Not sure what to write? Find the perfect words for any occasion — then create a free digital card in seconds.
+            Not sure what to write? Find the perfect words for any occasion and then create a free digital card in seconds.
           </p>
 
           {/* Category quick links */}
@@ -137,16 +137,18 @@ export default function IdeasPage() {
 
         {/* SEO intro paragraph — keyword-rich, human-written */}
         <section className="mb-12 rounded-3xl bg-white/70 p-6 shadow-md backdrop-blur md:p-8">
-          <h2 className="text-xl font-bold text-foreground">Why a digital love card hits different 💖</h2>
+          <h2 className="text-xl font-bold text-foreground">Why a digital love card hits different?</h2>
           <p className="mt-3 text-muted-foreground leading-relaxed">
-            Texts disappear in a scroll, and emails feel formal. A Lovia card arrives as a unique link — your
-            special someone taps it and a cute animal appears, sleeping, waiting. The moment they tap again,
-            it wakes up and your message types itself out, one letter at a time. You can even add music. That
-            tiny moment of magic is what makes people screenshot it, share it, and remember it.
+            Texts get buried in endless conversations, and emails can feel a little too formal. Lovia is different.
+            Instead of sending just another message, you share a special link. When they open it, they’ll find a
+            cute little animal sleeping peacefully. With one tap, it wakes up and your message appears letter
+            by letter, making the whole moment feel a little more personal. You can even add music to make it
+            extra special. It’s a simple surprise, but it’s the kind of thing people remember, save, and share.
           </p>
           <p className="mt-3 text-muted-foreground leading-relaxed">
-            Below you&apos;ll find message ideas sorted by occasion. Copy one, tweak it to sound like you, and
-            paste it into Lovia. No signup, no payment — just a card your person will actually feel.
+            Below, you’ll find message ideas for different occasions. Pick one you like, make it your own, and
+            paste it into Lovia. No sign-up, no payment just a thoughtful card that feels a lot more personal
+            than a regular text.
           </p>
         </section>
 
@@ -180,7 +182,7 @@ export default function IdeasPage() {
             {[
               {
                 q: "Are Lovia cards free to create?",
-                a: "Yes — 100% free. No account needed. Just pick your companion, write your message, and share the link.",
+                a: "Yes, 100% free. No account needed. Just pick your companion, write your message, and share the link.",
               },
               {
                 q: "Can I add my own photo to the card?",
@@ -192,7 +194,7 @@ export default function IdeasPage() {
               },
               {
                 q: "Can I send a card to someone far away?",
-                a: "Yes — Lovia cards are just links. Send them over WhatsApp, Instagram DMs, iMessage, or any other app. Long distance, no problem.",
+                a: "Yes. Lovia cards are just links. Send them over WhatsApp, Instagram DMs, iMessage, or any other app. Long distance, no problem.",
               },
               {
                 q: "What occasions are Lovia cards for?",

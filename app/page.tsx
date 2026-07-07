@@ -53,7 +53,7 @@ export default function HomePage() {
         </span>
         <Link
           href="/ideas"
-          className="rounded-full border border-primary/30 bg-white/60 px-4 py-2 text-sm font-semibold text-primary backdrop-blur transition-all hover:bg-white/90"
+          className="rounded-full bg-white/60 px-4 py-2 text-sm font-semibold text-primary backdrop-blur transition-all hover:bg-white/90"
         >
           Message ideas 💝
         </Link>
@@ -67,12 +67,11 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-balance text-4xl font-extrabold tracking-tight text-foreground md:text-6xl">
-            Send a card that <span className="text-primary">actually feels</span> like something 💖
+            Send a card that <span className="text-primary">actually feels</span> like something
           </h1>
 
           <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground md:text-xl">
-            Pick a cute companion, write your message, share the link.
-            They tap — and a little magic happens.
+            Pick a cute character, drop your message, and send the link. Watch the magic happen when they open it!
           </p>
 
           {cardCount !== null && cardCount > 0 && (
@@ -87,9 +86,9 @@ export default function HomePage() {
         <section className="mb-14">
           <div className="grid grid-cols-3 gap-3 md:gap-5">
             {[
-              { n: "1", emoji: "🐾", title: "Pick a companion", desc: "An animal that matches the feeling" },
-              { n: "2", emoji: "💌", title: "Write your message", desc: "Add music & a photo if you want" },
-              { n: "3", emoji: "🫶", title: "Share the link", desc: "They tap it — magic happens" },
+              { n: "1", emoji: "", title: "Pick a companion", desc: "An animal that matches the feeling" },
+              { n: "2", emoji: "", title: "Write your message", desc: "Add music & a photo if you want" },
+              { n: "3", emoji: "", title: "Share the link", desc: "They tap it and magic happens" },
             ].map((s) => (
               <div
                 key={s.n}
@@ -125,7 +124,7 @@ export default function HomePage() {
         <section className="mb-10">
           <div className="mb-4 flex items-center justify-center gap-2">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/20" />
-            <span className="rounded-full border border-primary/30 bg-white/60 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary backdrop-blur">
+            <span className="rounded-full border-primary/30 bg-white/60 px-3 py-1 text-base font-bold uppercase tracking-widest text-primary backdrop-blur">
               Special editions
             </span>
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/20" />
