@@ -11,9 +11,7 @@
 
 Lovia is a web application for creating and sharing personalized digital cards.
 
-Users can create a card, customize it with images and music, and share it through a unique link.
-
-The application is deployed on Azure Static Web Apps and uses GitHub Actions for automated CI/CD.
+The application is built with Next.js and Supabase, containerized with Docker, automatically deployed through GitHub Actions, and hosted on Azure Static Web Apps.
 
 ## Live Demo
 
@@ -26,47 +24,48 @@ https://www.loviaforyou.com
   <img src="./public/gif/open-card.gif" width="340" alt="Open card">
 </p>
 
-
 # Architecture
 
 ```text
-                 GitHub
-                    │
-                    ▼
-          GitHub Actions CI/CD
-
-          Lint → Test → Build
-                    │
-                    ▼
-        Azure Static Web Apps
-                    │
-                    ▼
-             Next.js Application
-                    │
-                    ▼
-               Supabase
+Developer
+    │
+    ▼
+GitHub
+    │
+    ▼
+GitHub Actions
+(Lint → Test → Build)
+    │
+    ▼
+Azure Static Web Apps
+    │
+    ▼
+Next.js
+    │
+    ▼
+Supabase
 ```
 
 # Features
 
 - Create personalized digital cards
 - Upload custom images
-- Add optional background music
-- Generate shareable card links
-- View card status
+- Optional background music
+- Share cards using unique URLs
+- Card status page
 - Basic API rate limiting
-
 
 # Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| Framework | Next.js 14 |
+| Frontend | Next.js |
 | Language | TypeScript |
 | Styling | Tailwind CSS |
+| Backend | Next.js Route Handlers |
 | Database | Supabase |
 | Hosting | Azure Static Web Apps |
-| Containers | Docker |
+| Container | Docker |
 | CI/CD | GitHub Actions |
 | Testing | Jest |
 
@@ -74,20 +73,18 @@ https://www.loviaforyou.com
 # Project Structure
 
 ```text
-lovia/
-├── .github/
-│   └── workflows/
+.
 ├── app/
-│   ├── api/
-│   ├── card/
-│   └── ideas/
 ├── components/
 ├── lib/
 ├── public/
+├── __tests__/
+├── .github/
+│   └── workflows/
 ├── Dockerfile
 ├── docker-compose.yml
-├── README.md
-└── LICENSE
+├── package.json
+└── README.md
 ```
 
 # Requirements
@@ -97,14 +94,12 @@ lovia/
 - Docker (optional)
 - Supabase project
 
-
 # Local Development
 
 Clone the repository.
 
 ```bash
 git clone https://github.com/R0s3mrcx/lovia.git
-
 cd lovia
 ```
 
@@ -120,14 +115,7 @@ Create the environment file.
 cp .env.example .env
 ```
 
-Configure the required variables.
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
-```
-
-Start the development server.
+Run the application.
 
 ```bash
 npm run dev
@@ -139,7 +127,7 @@ Open:
 http://localhost:3000
 ```
 
-# Running with Docker
+# Docker
 
 Build and start the application.
 
@@ -147,7 +135,7 @@ Build and start the application.
 docker compose up --build
 ```
 
-The application will be available at:
+Open:
 
 ```
 http://localhost:3000
@@ -162,70 +150,39 @@ http://localhost:3000
 
 # API
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/cards` | Create a new card |
-| GET | `/api/status` | Application health check |
+## Create Card
+
+```http
+POST /api/cards
+```
+
+Creates a new digital card.
+
+## Health Check
+
+```http
+GET /api/status
+```
+
+Returns the application health status.
 
 # Testing
 
-Run the test suite.
+Run all tests.
 
 ```bash
 npm test
 ```
 
-The test suite validates:
+The CI pipeline executes:
 
-- Music selection logic
-- Animal selection logic
-- Card creation endpoint validation
-
-# CI/CD
-
-Every push and pull request runs the GitHub Actions CI pipeline.
-
-The workflow performs:
-
-1. Install dependencies
-2. Run ESLint
-3. Execute tests
-4. Build the application
-
-Pushes to the `main` branch trigger an automated deployment to Azure Static Web Apps.
-
+- Lint
+- Tests
+- Production build
 
 # Deployment
 
-The application is deployed using:
-
-- GitHub Actions
-- Azure Static Web Apps
-
-Deployment flow:
-
-```text
-Push to main
-
-↓
-
-GitHub Actions
-
-↓
-
-Lint → Test → Build
-
-↓
-
-Azure Static Web Apps Deployment
-```
-
-# Future Improvements
-
-- User authentication
-- Additional card themes
-- More customization options
-- Email sharing
+Every push to the `main` branch automatically deploys the application to Azure Static Web Apps using GitHub Actions.
 
 # License
 
