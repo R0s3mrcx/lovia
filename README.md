@@ -11,7 +11,7 @@
 
 Lovia is a web application for creating and sharing personalized digital cards.
 
-The application is built with Next.js and Supabase, containerized with Docker, automatically deployed through GitHub Actions, and hosted on Azure Static Web Apps.
+It is built with Next.js and Supabase, containerized with Docker, automatically deployed through GitHub Actions, and hosted on Azure Static Web Apps.
 
 ## Live Demo
 
