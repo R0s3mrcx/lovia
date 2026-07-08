@@ -27,22 +27,16 @@ https://www.loviaforyou.com
 # Architecture
 
 ```text
-Developer
-     │
-     ▼
- GitHub
-     │
-     ▼
-GitHub Actions
-     │
-     ▼
-Azure Static Web Apps
-     │
-     ▼
- Next.js
-     │
-     ▼
- Supabase
+             Client
+               │
+               ▼
+    Azure Static Web Apps
+               │
+               ▼
+            Next.js
+        ┌──────┴──────┐
+        ▼             ▼
+     API Routes   Supabase
 ```
 
 # Features
